@@ -2,9 +2,10 @@ import './App.css';
 import { useState } from 'react'
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouseUser, faAddressCard } from "@fortawesome/free-solid-svg-icons";
+import { faHouseUser, faAddressCard, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-library.add(faHouseUser, faAddressCard);
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+library.add(faHouseUser, faAddressCard, faEnvelope, faGithub, faLinkedin);
 
 
 
@@ -12,7 +13,6 @@ function App() {
   // show API result after recieving name in form
   const [showForm, setShowForm] = useState(true);
   const [name, setName] = useState("");
-  const [about, showAbout] = useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ function App() {
       {/* navbar component */}
       <Navbar className="nav" expand="lg">
         <Container>
-          <Button title="Home" type="button" onClick={() => setShowForm(true)}>
+          <Button id="home-button" title="Home" type="button" onClick={() => setShowForm(true)}>
             SMP
           </Button>
             <Nav className="ms-auto" activeKey="/home">
@@ -63,6 +63,14 @@ function App() {
       <div>
         <h1>These are your results from the API</h1>
       </div>}
+      <footer>
+      <div>
+        <a href="https://github.com/rpet064"><FontAwesomeIcon className="footer-icon" icon={["fab", "github"]} title="Github"/></a>
+        <a href="www.linkedin.com/in/robert-pether-ba9968113"><FontAwesomeIcon className="footer-icon" icon={["fab", "linkedin"]} title="Linkedin"/></a>
+        <a href="mailto:rpether@hotmail.co.nz"><FontAwesomeIcon className="footer-icon" icon={["fas", "envelope"]} title="Email"/></a>
+      </div>
+      <p>Copyright Robert Pether {new Date().getFullYear()}</p>
+    </footer>
     </div>
   );
 }
