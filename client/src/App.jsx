@@ -46,19 +46,21 @@ function App() {
         </Container>
       </Navbar>
         {(showForm)?
-      <div>
-        <h1>Welome to Skodel Mood Predictor</h1>
-        <h3>Insert your name and the app will make a prediction</h3>
-        <form onSubmit={handleSubmit}>
-          <label>Enter your name:
-            <input 
-              type="text" 
+      <div id='container'>
+          <div className='card'>
+            <h1> Skodel Mood Predictor</h1>
+            <h3>Insert your name and it will make a prediction</h3>
+            <form onSubmit={handleSubmit}>
+          <label>Name: 
+            <input
+              type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+              onChange={(e) => setName(e.target.value)}>
+          </input>
           </label>
-          <input type="submit" />
+          <input type="submit" id="form-button"/>
         </form>
+        </div>
       </div>:
       <div>
         <h1>These are your results from the API</h1>

@@ -1,44 +1,31 @@
+/* html styling */
+
+html{
+  font-size: 100%;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+*{
+  box-sizing: inherit;
+}
+
 body {
   text-align: center;
-  margin: 0; 
-  padding: 0; 
-  box-sizing:border-box; 
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box;
+  line-height: 1.3;
+  background-color: #e8ffed;
+  background-image: url(http://www.transparenttextures.com/patterns/handmade-paper.png);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+img{
+  width: 100%;
+  border-radius: 12px;
+  height: 214px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 /* navbar */
 
@@ -46,15 +33,19 @@ body {
   background-color: #77D754;
   margin: auto -16px;
   padding: 1rem 1.75rem;
-  font-family: "Fira Sans Condensed", sans-serif;
 }
 
 .btn-group {
   display: flex;
   flex-direction: row-reverse;
   position: relative;
-  bottom: 1rem;
+  bottom: 2rem;
 }
+
+#address-card {
+    top: 1px;
+  }
+
 
 .nav .btn, a{
   color: #9d6cc7;
@@ -63,6 +54,7 @@ body {
 
 .nav .btn:hover, a:hover{
   color: #C70B3E;
+  cursor: pointer;
 }
 
 .btn {
@@ -78,8 +70,53 @@ body {
 #home-button{
   position: relative;
   right: 41%;
-  font-size: 1.5rem;
+  font-size: 2rem;
   top: 0.3rem;
+  font-family: 'Pacifico', cursive;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 800px) {
+  #home-button {
+    margin-left: 7%;
+  }
+}
+
+/* middle container */
+
+#container {
+  max-width: 21.5rem;
+  margin: 1% auto;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #bacdd8;
+  padding: 8px;
+  border-radius: 12px;
+  background-color: #e8ffed;
+}
+
+/* middle container - Button */
+
+#form-button{
+  border: none;
+  width: 7.5rem;
+  height: 4rem;
+  border-radius: 50px;
+  font-weight: 600;
+  background-color: red;
+  color: white;
+  margin: 4% auto 1.5% auto ;
+  display: block;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  #form-button {
+  width: 9.8rem;
+  height: 4.9rem;
+  }
 }
 
 /* footer */
@@ -89,21 +126,20 @@ footer {
   text-align: center;
   bottom: 0;
   width: 100%;
-  height: 1.5rem;
   background-color: #77D754;
   color: white;
-  padding: 1% 0 3.75% 0;
-}
-
-@media (max-width: 800px){
-footer {
-  padding-bottom: 6.5%;
-  }
+  padding-top: 1%;
 }
 
 .footer-icon {
   margin-right: 1.25%;
   color: #9d6cc7
+}
+
+@media screen and (max-width: 768px) {
+  .footer-icon {
+  margin-top: 1%;
+  }
 }
 
 .footer-icon:hover{
