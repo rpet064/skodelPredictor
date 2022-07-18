@@ -13,7 +13,7 @@ no_duplicate_list_of_names = list(set(list_of_names))
 column_1 = [ele.split()[0] for ele in no_duplicate_list_of_names]
 column_1 = sorted(column_1)
 
-# # total checkins & total mood score
+# total checkins & total mood score
 total_checkins = skodel_df.groupby('name')['name'].value_counts()
 total_mood_score = skodel_df.groupby('name')['mood'].sum()
 # average mood score per check in
@@ -33,33 +33,33 @@ total_words_student = skodel_df.groupby('name')['total_words'].sum()
 avg_words_check_in = (total_words_student / total_checkins ).tolist()
 column_5 = [math.ceil(avg) for avg in avg_words_check_in]
 
-# # extract tags
-# tags_list = skodel_df['tags'].tolist()
-# column_6 = list(filter(None, tags_list))
+# extract tags
+tags_list = skodel_df['tags'].tolist()
+column_6 = list(filter(None, tags_list))
 
-# # extract responses
-# response_list = skodel_df['third_question_response'].tolist()
-# response_list = [resp.replace('\r', '').replace('.', '').replace('-', '').replace('?', '').replace('_\x98_20220515 20:00:09605585+00:00', '') for resp in response_list]
-# norm_response_list = list(filter(None, response_list))
-# column_7 = " ".join(norm_response_list).split()
-# column_7.remove('&s')
-# column_7.remove('1')
-# column_7.remove('2')
-# column_7.remove('4')
+# extract responses
+response_list = skodel_df['third_question_response'].tolist()
+response_list = [resp.replace('\r', '').replace('.', '').replace('-', '').replace('?', '').replace('_\x98_20220515 20:00:09605585+00:00', '') for resp in response_list]
+norm_response_list = list(filter(None, response_list))
+column_7 = " ".join(norm_response_list).split()
 
-# # whole class mean mood
-# column_8 = str(skodel_df['mood'].mean())
+# whole class mean mood
+avg_mood_class = skodel_df['mood'].mean()
+column_8 = str(round(avg_mood_class, 2))
+column_8 = column_8.split(',')
 
 # create df-> excel
 student_summary_data_df = pd.DataFrame(list(zip(column_1, column_2, column_3, column_4, column_5)),
              columns =['name', 'total_checkins', 'total_mood_score', 'mood_mean_score', 'avg_words_check_in'])
 
-# class_summary_data_df = pd.DataFrame(list(zip(column_6, column_7, column_8)),
-#              columns =['tags', 'responses', 'total_class_mean'])
+df1 = pd.DataFrame(column_6, columns = ['tags'])
+df2 = pd.DataFrame(column_7, columns = ['responses'])
+df3 = pd.DataFrame(column_8, columns = ['whole_class_mean'])
+
+pd.concat([df1,df2, df3],axis=1).to_excel('class_summary_data.xlsx')
 
 # drop students who changed school
 student_summary_data_df = student_summary_data_df.drop(student_summary_data_df.index[10])
 student_summary_data_df = student_summary_data_df.drop(student_summary_data_df.index[10])
-student_summary_data_df.to_excel('student_summary_data.xlsx')
-# class_summary_data_df.to_excel('class_summary_data.xlsx')
+student_summary_data_df.to_excel('student_summary_data.xlsx', index=False)
 
