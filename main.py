@@ -2,14 +2,26 @@ import pandas as pd
 import math
 from contraction_dict import contraction_map as cd
 import re
-import nltk from nltk.corpus 
-import stopwords 
-nltk.download('stopwords') 
+import nltk
+import ssl
+from nltk.corpus import stopwords 
+from nltk.tokenize import word_tokenize
+import string
 
-csv_url = 'skodel_data.csv'
+# disabling ssl check
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
 
+# nltk library downloads
+# nltk.download('punkt')
+# nltk.download('stopwords')
 
 # prepare data
+csv_url = 'skodel_data.csv'
 skodel_df = pd.read_csv(csv_url, encoding='latin1')
 skodel_df.fillna('', inplace=True)
 
@@ -57,12 +69,30 @@ without_contractions = [i for item in without_white_space for i in item.split()]
 for word in without_contractions:
      if word in cd:
         without_contractions = [item.replace(word, cd[word]) for item in without_contractions]
-# remove numbers & punctuation
-Formatted_Text = []
-for word in without_contractions:
-    Formatted_Text.append(re.sub(r"[^a-zA-Z0-9:$-,%.?!]+", ' ', word))
 
-print(Formatted_Text)
+# remove punctuation
+without_punctuation = []
+for word in without_contractions:
+    for letter in word:
+        if letter in string.punctuation:
+            word = word.replace(letter,"")
+    without_punctuation.append(word)
+
+# remove numbers
+without_integer = [item for item in without_punctuation if not item.isdigit()]
+
+print(without_integer)
+
+# to clean \x9820220515       '2nd' => second       duplication     u => you      empty strings    stop words
+
+
+# # remove stopwords
+# stoplist = stopwords.words('english')
+# stoplist = set(stoplist)
+# remove_stop_words = [word for word in formatted_Text if word not in stoplist ]
+# words_string = ' '.join(remove_stop_words)
+
+# print(words_string)
 
 
 # # whole class mean mood
