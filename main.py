@@ -1,24 +1,6 @@
 import pandas as pd
 import math
-from contraction_dict import contraction_map as cd
-import re
-import nltk
-import ssl
-from nltk.corpus import stopwords 
-from nltk.tokenize import word_tokenize
-import string
-
-# disabling ssl check
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    pass
-else:
-    ssl._create_default_https_context = _create_unverified_https_context
-
-# nltk library downloads
-# nltk.download('punkt')
-# nltk.download('stopwords')
+from preprocess_indv_words import preprocessIndvWords
 
 # prepare data
 csv_url = 'skodel_data.csv'
@@ -56,44 +38,8 @@ skodel_df.fillna('', inplace=True)
 # column_6 = list(filter(None, tags_list))
 
 # extract responses
-
-# change input to lower case
-response_list = [resp.lower()for resp in skodel_df['third_question_response']]
- # Replacing all the occurrences of \n,\\n,\t,\\ with space
-without_line_breaks = [text.replace('\\n', ' ').replace('\n', ' ').replace('\t', ' ').replace('\\', ' ').replace(
-     '. com', '.com').replace('\r', '').replace('_\x98_20220515 20:00:09605585+00:00', '') for text in response_list]
-# remove white space, filter list and seperate list
-without_white_space = [resp.strip() for resp in without_line_breaks if len(resp) > 11]
-without_contractions = [i for item in without_white_space for i in item.split()]
-# changing contractions (let's => let us)
-for word in without_contractions:
-     if word in cd:
-        without_contractions = [item.replace(word, cd[word]) for item in without_contractions]
-
-# remove punctuation
-without_punctuation = []
-for word in without_contractions:
-    for letter in word:
-        if letter in string.punctuation:
-            word = word.replace(letter,"")
-    without_punctuation.append(word)
-
-# remove numbers
-without_integer = [item for item in without_punctuation if not item.isdigit()]
-
-print(without_integer)
-
-# to clean \x9820220515       '2nd' => second       duplication     u => you      empty strings    stop words
-
-
-# # remove stopwords
-# stoplist = stopwords.words('english')
-# stoplist = set(stoplist)
-# remove_stop_words = [word for word in formatted_Text if word not in stoplist ]
-# words_string = ' '.join(remove_stop_words)
-
-# print(words_string)
-
+piw = preprocessIndvWords(skodel_df['third_question_response'])
+piw()
 
 # # whole class mean mood
 # avg_mood_class = skodel_df['mood'].mean()
