@@ -9,7 +9,7 @@ library.add(faHouseUser, faAddressCard, faEnvelope, faGithub, faLinkedin);
 
 
 
-function App() {
+export default function App() {
   // show API result after recieving name in form
   const [showForm, setShowForm] = useState(true);
   const [name, setName] = useState("");
@@ -76,5 +76,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
