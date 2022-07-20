@@ -1,6 +1,6 @@
 import pandas as pd
 import math
-from preprocess_indv_words import preprocessIndvWords
+from preprocess_indv_words import PreprocessIndvWords
 
 # prepare data
 csv_url = 'skodel_data.csv'
@@ -38,9 +38,8 @@ skodel_df.fillna('', inplace=True)
 # column_6 = list(filter(None, tags_list))
 
 # extract responses
-piw = preprocessIndvWords(skodel_df['third_question_response'])
-piw()
-
+piw = PreprocessIndvWords(skodel_df['third_question_response'])
+print(piw.lowercase())
 # # whole class mean mood
 # avg_mood_class = skodel_df['mood'].mean()
 # column_8 = str(round(avg_mood_class, 2))
