@@ -5,6 +5,8 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import string
 import re
+from autocorrect import Speller
+from autocorrect import Speller 
 
 class PreprocessIndvWords:
 
@@ -21,6 +23,8 @@ class PreprocessIndvWords:
         # nltk library downloads
         nltk.download('punkt')
         nltk.download('stopwords')
+        nltk.download('wordnet')
+        nltk.download('omw-1.4')
         self.data = data
         self.response_list = [resp.lower()for resp in self.data]
     
@@ -28,8 +32,7 @@ class PreprocessIndvWords:
         # all lowercase
         # Replacing all the occurrences of \n,\\n,\t,\\ (and other edge cases) with space
         self.without_line_breaks = [text.replace('\\n', ' ').replace('\n', ' ').replace('\t', ' ').replace(
-            '\\', ' ').replace('. com', '.com').replace('\r', '').replace(
-            '_\\x98_20220515 20:00:09605585+00:00', '').replace('better\x9820220515', 'better').replace('\x98\x81', '') for text in self.response_list]
+            '\\', ' ').replace('. com', '.com').replace('\r', '') for text in self.response_list]
         return self
 
     def remove_whitespace(self):
@@ -77,4 +80,16 @@ class PreprocessIndvWords:
         # Limiting punctuations in previously formatted string to only one.
         self.combined_formatted = self.pattern_punct.sub(r'\1', self.formatted_text)
         self.final_formatted = re.sub(' {2,}',' ', self.combined_formatted)
-        return self.final_formatted
+        return self
+    
+    def spelling_fixer(self):
+        self.spell = Speller(lang='en') 
+        self.corrected_text = self.spell(self.final_formatted)
+        return self
+    
+    def lemmatization(self):
+        self.w_tokenizer = nltk.tokenize.WhitespaceTokenizer()
+        self.lemmatizer = nltk.stem.WordNetLemmatizer()
+        self.lemma = [self.lemmatizer.lemmatize(w,'v') for w in self.w_tokenizer.tokenize(self.corrected_text)]
+        return self.lemma
+        

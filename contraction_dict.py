@@ -117,7 +117,6 @@ contraction_map = {
 "you're": "you are",
 "you've": "you have",
 # misc
-"u": "you",
 "1st": "first",
 "2nd": "second",
 "3rd": "third",
