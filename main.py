@@ -7,39 +7,44 @@ csv_url = 'skodel_data.csv'
 skodel_df = pd.read_csv(csv_url, encoding='latin1')
 skodel_df.fillna('', inplace=True)
 
-# # prepare names, no duplicate, alphabetical
-# list_of_names = skodel_df['name'].tolist()
-# no_duplicate_list_of_names = list(set(list_of_names))
-# column_1 = [ele.split()[0] for ele in no_duplicate_list_of_names]
-# column_1 = sorted(column_1)
+# prepare names, no duplicate, alphabetical
+list_of_names = skodel_df['name'].tolist()
+no_duplicate_list_of_names = list(set(list_of_names))
+column_1 = [ele.split()[0] for ele in no_duplicate_list_of_names]
+column_1 = sorted(column_1)
 
-# # total checkins & total mood score
-# total_checkins = skodel_df.groupby('name')['name'].value_counts()
-# total_mood_score = skodel_df.groupby('name')['mood'].sum()
-# # average mood score per check in
-# avg_mood_list = (total_mood_score / total_checkins).tolist()
-# column_4 = [round(avg, 2) for avg in avg_mood_list]
-# column_2 = total_checkins.tolist()
-# column_3 = total_mood_score.tolist()
+# total checkins & total mood score
+total_checkins = skodel_df.groupby('name')['name'].value_counts()
+total_mood_score = skodel_df.groupby('name')['mood'].sum()
+# average mood score per check in
+avg_mood_list = (total_mood_score / total_checkins).tolist()
+column_4 = [round(avg, 2) for avg in avg_mood_list]
+column_2 = total_checkins.tolist()
+column_3 = total_mood_score.tolist()
 
-# # average words per check in
-# skodel_df['total_words'] = skodel_df['third_question_response'].str.count(' ') + 1
-# # class average
-# total_words_class = skodel_df['total_words'].sum()
-# total_checkins_class = len(skodel_df)
-# class_average_words = int(total_words_class / total_checkins_class)
-# # per student
-# total_words_student = skodel_df.groupby('name')['total_words'].sum()
-# avg_words_check_in = (total_words_student / total_checkins ).tolist()
-# column_5 = [math.ceil(avg) for avg in avg_words_check_in]
+# average words per check in
+skodel_df['total_words'] = skodel_df['third_question_response'].str.count(' ') + 1
+# class average
+total_words_class = skodel_df['total_words'].sum()
+total_checkins_class = len(skodel_df)
+class_average_words = int(total_words_class / total_checkins_class)
+# per student
+total_words_student = skodel_df.groupby('name')['total_words'].sum()
+avg_words_check_in = (total_words_student / total_checkins ).tolist()
+column_5 = [math.ceil(avg) for avg in avg_words_check_in]
 
-# # extract tags
-# tags_list = skodel_df['tags'].tolist()
-# column_6 = list(filter(None, tags_list))
+# extract tags
+tags_list = skodel_df['tags'].tolist()
+column_6 = list(filter(None, tags_list))
 
-# extract responses
+# chain methods from PreprocessIndvWords class to clean data
 piw = PreprocessIndvWords(skodel_df['third_question_response'])
-print(piw.lowercase())
+cleaned_data = piw.without_line_break().remove_whitespace().change_contractions().remove_punctuation(
+).remove_integers().remove_stopwords().remove_duplicates()
+# print(cleaned_data.split(" ", ","))
+column_7 = cleaned_data.split(' ')
+print(column_7)
+
 # # whole class mean mood
 # avg_mood_class = skodel_df['mood'].mean()
 # column_8 = str(round(avg_mood_class, 2))
