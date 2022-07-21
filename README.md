@@ -11,3 +11,12 @@ Processed data exludes last names and other data that could be used to identify 
 
 # Note
 For names not in the data set, the model will still make a prediction based on the sample data set, but will have reduced accuracy. 
+
+# Resources & Links
+
+preprocessing data for NLP (Natural Language Processing)
+https://towardsdatascience.com/cleaning-preprocessing-text-data-by-building-nlp-pipeline-853148add68a
+
+Generating pseudo random text with Markov chains using Python
+https://www.agiliq.com/blog/2009/06/generating-pseudo-random-text-with-markov-chains-u/
+https://towardsdatascience.com/text-generation-using-n-gram-model-8d12d9802aa0
